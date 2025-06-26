@@ -26,10 +26,14 @@ const client = new MongoClient(uri, {
 async function run() {
   try {
 
+const db = client.db("parcelDB"); // database name
+const ParcelCollection = db.collection("parcels"); // collection
 
 
-
-
+ app.get('/parcels', async (req,res) => {
+    const parcels = await ParcelCollection.find().toArray();
+    res.send(parcels)
+ })
 
 
 
