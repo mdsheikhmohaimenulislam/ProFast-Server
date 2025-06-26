@@ -36,7 +36,17 @@ const ParcelCollection = db.collection("parcels"); // collection
  })
 
 
-
+//  POST: Create a new parcel
+app.post('/parcels', async (req,res) => {
+    try{
+        const newParcel =req.body;
+        const result = await ParcelCollection.insertOne(newParcel);
+        res.status(201).send(result);
+    }catch{
+        console.error("Error inserting parcel:" , error);
+        res.status(500).send({message: "Failed to create parcel"})
+    }
+})
 
 
 
