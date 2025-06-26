@@ -3,7 +3,7 @@ const express = require('express');
 const cors = require('cors');
 const { MongoClient, ServerApiVersion } = require('mongodb');
 const app = express();
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 8000;
 
 // Middleware
 app.use(cors());
@@ -37,17 +37,17 @@ const ParcelCollection = db.collection("parcels"); // collection
 
 
 //  POST: Create a new parcel
-app.post('/parcels', async (req,res) => {
-    try{
-        const newParcel =req.body;
+app.post('/parcels', async (req, res) => {
+    try {
+        const newParcel = req.body;
+        console.log("Received Parcel:", newParcel); // 🐞 Debug log
         const result = await ParcelCollection.insertOne(newParcel);
         res.status(201).send(result);
-    }catch{
-        console.error("Error inserting parcel:" , error);
-        res.status(500).send({message: "Failed to create parcel"})
+    } catch (error) { // ✅ error correctly defined
+        console.error("Error inserting parcel:", error);
+        res.status(500).send({ message: "Failed to create parcel" });
     }
-})
-
+});
 
 
 
